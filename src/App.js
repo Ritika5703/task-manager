@@ -1,64 +1,43 @@
-import "./App.css";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import React from "react";
+import Tasks from "./Pages/Tasks";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min";
-import TaskInput from "./Components/TaskInput";
-import TaskItem from "./Components/TaskItem";
-import { useState } from "react";
+
 function App() {
-  const [tasks, setTasks] = useState([]);
-
-  const addTask = (task) => {
-    setTasks([...tasks, task]);
-  };
-
-  const toggleTask = (id) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === id ? { ...task, done: !task.done } : task
-      )
-    );
-  };
-
-  const deleteTask = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id));
-  };
-
-  const editTask = (id, newText, newReminderTime) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === id
-          ? { ...task, text: newText, reminderTime: newReminderTime }
-          : task
-      )
-    );
-  };
-
   return (
-    <div>
-      <Router>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <div className="container">
-            <Link className="navbar-brand" to="/">
-              Task Manager
-            </Link>
-          </div>
-        </nav>
-        <div className="container mt-4">
-          <TaskInput onAddTask={addTask} />
-          <ul className="list-group mt-4">
-            {tasks.map((task) => (
-              <TaskItem
-                key={task.id}
-                task={task}
-                onToggle={toggleTask}
-                onDelete={deleteTask}
-                onEdit={editTask}
-              />
-            ))}
-          </ul>
-        </div>
-      </Router>
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "linear-gradient(135deg, #dceefb, #f9f9f9)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "40px 16px",
+        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+        animation: "fadeIn 1s ease-in-out",
+      }}
+    >
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "950px",
+          background: "rgba(255, 255, 255, 0.85)",
+          borderRadius: "20px",
+          boxShadow: "0 12px 30px rgba(0, 0, 0, 0.1)",
+          padding: "2.5rem",
+          backdropFilter: "blur(10px)",
+          transition: "all 0.3s ease-in-out",
+        }}
+      >
+        <Tasks />
+      </div>
+
+      {/* Optional fade-in animation */}
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 }
